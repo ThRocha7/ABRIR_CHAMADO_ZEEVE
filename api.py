@@ -12,7 +12,6 @@ data = {
   "isSimulation": True,
   "formFields": [
     {
-      "id": 0,
       "name": "grupo",
       "value": "Bild"
     },
