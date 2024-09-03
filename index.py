@@ -59,7 +59,7 @@ def write_enter_element(element:str, text:str):
         EC.presence_of_element_located((By.XPATH, element))
         )
         e.send_keys(text)
-        sleep(2)
+        sleep(3)
         e.send_keys(Keys.ENTER)
     except:
         print('tentando encontrar de novo')
@@ -89,7 +89,7 @@ def select_menu_element(element:str, text:str):
             driver.quit()
 
 resources.direct = input('Caminho... ')
-# resources.funcionamento = input('Qual o tipo de doc... ')
+resources.funcionamento = input('Qual o tipo de doc... ')
 
 inicar_apps = '//*[@id="aSideMenuNewRequest"]'
 click_element(inicar_apps)
@@ -156,14 +156,18 @@ for row in df.index:
     sleep(6)
 
     metodo_xpath = '//*[@id="inpmetodoParaEstePagamento"]'
-    select_menu_element(metodo_xpath, 'BR_BOLETO')
+    select_menu_element(metodo_xpath, 'BR_CONCESSIONARIA')  # SE concessionaria colocar: BR_CONCESSIONARIA;  e se boleto: BR_BOLETO
 
     banco_xpath = '//*[@id="inpbanco"]'
     write_enter_element(banco_xpath, dados['banco'])
 
+    sleep(1)
+
     num_agencia_xpath = '//*[@id="inpagencia"]'
     agencia = resources.formatar_agencia(dados['agencia'])
     write_enter_element(num_agencia_xpath, agencia)
+
+    sleep(1)
 
     cod_barras_xpath = '//*[@id="inpcodigoDeBarras"]'
     write_element(cod_barras_xpath, dados['cod_barras'])
@@ -180,7 +184,7 @@ for row in df.index:
 
     sleep(3)
 
-    validado_bol = resources.procurar_pdf(dados['nome_bol'], dados['fornecedor'], resources.direct)
+    validado_bol = resources.procurar_pdf(dados['nome_bol'], resources.direct)
 
     if validado_bol:
         sleep(3)
@@ -195,8 +199,10 @@ for row in df.index:
         outra_po_xpath = '//*[@id="inppossuiOutrosPedidosPoRelacionadoAoPagamento"]'
         select_menu_element(outra_po_xpath, 'Não')
 
+        sleep(1)
+
         tipo_nf_xpath = '//*[@id="inptipoNotaFiscal"]'
-        select_menu_element(tipo_nf_xpath, 'Serviço')
+        select_menu_element(tipo_nf_xpath, 'Documento não fiscal')
 
         tipo_nao_fiscal_xpath = '//*[@id="inptipoDocumentoNaoFiscal"]'
         select_menu_element(tipo_nao_fiscal_xpath, resources.funcionamento)
@@ -213,7 +219,7 @@ for row in df.index:
 
         sleep(3)    
 
-        validado_nf = resources.procurar_pdf(dados['nome_nf'], dados['fornecedor'], resources.direct)
+        validado_nf = resources.procurar_pdf(dados['nome_nf'], resources.direct)
 
         if validado_nf:
             sleep(3)

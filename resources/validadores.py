@@ -1,4 +1,3 @@
-from .dados import direct
 from pyautogui import press, hotkey, write
 import pyperclip as clip
 from time import sleep
@@ -41,7 +40,7 @@ def looping_tentativa(nome:str) -> bool:
         anterior = copia_while
 
 
-def procurar_pdf(nome_arq, nome_teste, direct):
+def procurar_pdf(nome_arq, direct):
     press(['f4'])
     hotkey('ctrl', 'a')
     clip.copy(direct)
@@ -50,7 +49,7 @@ def procurar_pdf(nome_arq, nome_teste, direct):
     sleep(1)
     press('tab')
     sleep(1)
-    write(nome_teste)
+    write(nome_arq)
     sleep(5)
     press(['tab', 'tab', 'tab', 'down', 'up', 'f2'])
     hotkey('ctrl', 'c')
